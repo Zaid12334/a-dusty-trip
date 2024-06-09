@@ -3,7 +3,7 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/Tha
 local TeleportService = game:GetService("TeleportService")
 local speaker = game.Players.LocalPlayer
 
-local Window = OrionLib:MakeWindow({Name = "a dusty trip", HidePremium = false, SaveConfig = true, ConfigFolder = "dustytrip"})
+local Window = OrionLib:MakeWindow({Name = "a dusty trip | Lobby Version", HidePremium = false, SaveConfig = true, ConfigFolder = "dustytrip"})
 
 local MainTab = Window:MakeTab({
 	Name = "Main",
