@@ -119,7 +119,7 @@ CarDropdown:AddDropdown({
 MainTab:AddButton({
 	Name = "Apply Settings!",
 	Callback = function()
-      	    local Car = game:GetService("Workspace"):FindFirstChild(settings.Car)
+      	    local Car = game:GetService("Workspace"):FindFirstChild(settings.Car) or game:GetService("Workspace"):FindFirstChild("Van")
             local req = Car["A-Chassis Tune"]
 
             local m = require(req)
