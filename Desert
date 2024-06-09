@@ -10,7 +10,7 @@ local settings = {
     "FBrakeForce" = 15000,
     "RBrakeForce" = 10000,
     "Config" = "RWD"
-    "Car" = "N/A"
+    "Car" = "Van"
 }
 
 local speaker = game.Players.LocalPlayer
