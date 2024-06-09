@@ -1,7 +1,24 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/ThacG/Orion/main/mobile')))()
 
-local TeleportService = game:GetService("TeleportService")
+local settings = {
+    "AutoFlip" = false,
+    "ABSEnabled" = false,
+    "PeakRPM" = 6500,
+    "SteerSpeed" = 0.03,
+    "FGyroDamp" = 100,
+    "RGyroDamp" = 100,
+    "FBrakeForce" = 15000,
+    "RBrakeForce" = 10000,
+    "Config" = "RWD"
+    "Car" = "N/A"
+}
+
 local speaker = game.Players.LocalPlayer
+local carList = {}
+
+for _, car in ipairs(game.ReplicatedStorage.Cars:GetChildren()) do
+    table.insert(carList, car.Name)
+end
 
 local Window = OrionLib:MakeWindow({Name = "a dusty trip | Desert Version", HidePremium = false, SaveConfig = true, ConfigFolder = "dustytrip"})
 
@@ -11,11 +28,154 @@ local MainTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-MainTab:AddButton({
-	Name = "The Classic",
-	Callback = function()
-      	TeleportService:Teleport(17584310335, speaker)
+local AutoFlip = MainTab:AddToggle({
+	Name = "Auto Flip",
+	Default = false,
+	Callback = function(Value)
+      	    settings.AutoFlip = Value
   	end    
+})
+
+local ABSEnabled = MainTab:AddToggle({
+	Name = "ABS Enabled",
+	Default = false,
+	Callback = function(Value)
+      	    settings.ABSEnabled = Value
+  	end    
+})
+
+MainTab:AddTextbox({
+	Name = "Peak RPM",
+	Default = "6500",
+	TextDisappear = true,
+	Callback = function(Value)
+	    settings.PeakRPM = Value
+	end	  
+})
+
+MainTab:AddTextbox({
+	Name = "Steer Speed",
+	Default = "0.03",
+	TextDisappear = true,
+	Callback = function(Value)
+	    settings.SteerSpeed = Value
+	end	  
+})
+
+MainTab:AddTextbox({
+	Name = "Front Gyro Damp",
+	Default = "100",
+	TextDisappear = true,
+	Callback = function(Value)
+	    settings.FGyroDamp = Value
+	end	  
+})
+
+MainTab:AddTextbox({
+	Name = "Right Gyro Damp",
+	Default = "100",
+	TextDisappear = true,
+	Callback = function(Value)
+	    settings.RGyroDamp = Value
+	end	  
+})
+
+MainTab:AddTextbox({
+	Name = "Front Brake Force",
+	Default = "15000",
+	TextDisappear = true,
+	Callback = function(Value)
+	    settings.FBrakeForce = Value
+	end	  
+})
+
+MainTab:AddTextbox({
+	Name = "Right Brake Force",
+	Default = "10000",
+	TextDisappear = true,
+	Callback = function(Value)
+	    settings.RBrakeForce = Value
+	end	  
+})
+
+local Config = MainTab:AddDropdown({
+	Name = "Config",
+	Default = "RWD",
+	Options = {"RWD", "4WD", "FWD", "RWD"},
+	Callback = function(Value)
+	    print(Value)
+	end    
+})
+
+CarDropdown:AddDropdown({
+    Name = "Select Car",
+    Default = "",
+    Options = carList,
+    Callback = function(Value)
+        settings.Car = Value
+    end
+})
+
+MainTab:AddButton({
+	Name = "Apply Settings!",
+	Callback = function()
+      	    local Car = game:GetService("Workspace"):FindFirstChild(settings.Car)
+            local req = Car["A-Chassis Tune"]
+
+            local m = require(req)
+            m.AutoFlip = settings.AutoFlip
+            m.ABSEnabled = settings.ABSEnabled
+            m.PeakRPM = settings.PeakRPM
+            m.SteerSpeed = settings.SteerSpeed
+            m.FGyroDamp = settings.FGyroDamp
+            m.RGyroDamp = settings.RGyroDamp
+            m.FBrakeForce = settings.FBrakeForce
+            m.RBrakeForce = settings.RBrakeForce
+            m.Config = settings.Config
+  	end    
+})
+
+MainTab:AddButton({
+	Name = "Recommend Settings!",
+	Callback = function()
+      	    local Car = game:GetService("Workspace"):FindFirstChild(settings.Car)
+            local req = Car["A-Chassis Tune"]
+
+            local m = require(req)
+            m.AutoFlip = true
+            m.ABSEnabled = true
+            m.PeakRPM = 6500
+            m.SteerSpeed = 0.08
+            m.FGyroDamp = 5000
+            m.RGyroDamp = 5000
+            m.FBrakeForce = 5000000
+            m.RBrakeForce = 5000000
+            m.Config = "AWD"
+  	end    
+})
+
+MainTab:AddButton({
+    Name = "Fast Car",
+    Callback = function()
+        workspace.Gravity = 200
+        for _, engine in ipairs(workspace:GetChildren()) do
+            if engine.Name == "Engine" then
+                engine.hp.Value = 30000
+                engine.maxgear.Value = math.huge
+            end
+        end
+
+        getgenv().FastCar = true
+        while getgenv().FastCar == true do
+            task.wait()
+            local args = {
+                [1] = workspace.Van.values.rpm,
+                [2] = -math.huge
+            }
+
+            workspace.Van.connection:FireServer(unpack(args))
+        end
+    end
 })
 
 OrionLib:Init()
