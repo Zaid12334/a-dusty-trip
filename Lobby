@@ -1,0 +1,21 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/ThacG/Orion/main/mobile')))()
+
+local TeleportService = game:GetService("TeleportService")
+local speaker = game.Players.LocalPlayer
+
+local Window = OrionLib:MakeWindow({Name = "a dusty trip", HidePremium = false, SaveConfig = true, ConfigFolder = "dustytrip"})
+
+local MainTab = Window:MakeTab({
+	Name = "Main",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+MainTab:AddButton({
+	Name = "The Classic",
+	Callback = function()
+      	TeleportService:Teleport(17584310335, speaker)
+  	end    
+})
+
+OrionLib:Init()
