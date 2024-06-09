@@ -3,5 +3,5 @@ if game.PlaceId == 16389395869 then
 elseif game.PlaceId == 16389398622 then
     https://raw.githubusercontent.com/Zaid12334/a-dusty-trip/main/Desert
 elseif game.PlaceId == 17527914941 then
-    https://raw.githubusercontent.com/Zaid12334/a-dusty-trip/main/Plains
+    https://raw.githubusercontent.com/Zaid12334/a-dusty-trip/main/Desert
 end
