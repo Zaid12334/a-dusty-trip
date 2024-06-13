@@ -1,0 +1,17 @@
+local DiscordLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt"))()
+
+local Window = DiscordLib:Window("a dusty trip | Indev")
+local Server = Window:Server("Testing", "http://www.roblox.com/asset/?id=6031075938")
+local TestingChannel = Server:Channel("Testing")
+
+local script
+
+TestingChannel:Textbox("Script", "Type Script Path here!", true, function(Value)
+    script = Value
+end)
+
+TestingChannel:Seperator()
+
+TestingChannel:Button("Write Script", function()
+    writefile(".//" .. script.Name .. ".lua", getscriptbytecode(script))
+end)
